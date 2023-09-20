@@ -1,24 +1,16 @@
-package ua.pp.spidchenko.importcsv;
+package ua.pp.spidchenko.importcsv
 
-import ua.pp.spidchenko.importcsv.util.CsvReader;
+import ua.pp.spidchenko.importcsv.util.CsvReader
+import ua.pp.spidchenko.importcsv.util.DOWNLOADS_FOLDER_PATH
+import java.time.LocalDateTime
 
-import java.io.IOException;
-import java.nio.file.FileSystems;
-
-public class App {
-
-    static final String FILE_PATH = "C:\\Users\\DmytroSpidchenkoAdmi\\Downloads\\";
-    static final String FILE_NAME = "export-2023-09-20-08-29-27.csv";
-
-    public static void main(String[] args) throws IOException {
-
-        CsvReader csvReader = new CsvReader(FILE_PATH + FileSystems.getDefault().getSeparator() + FILE_NAME);
-        csvReader.readFile();
-
-        csvReader.getDailyData().forEach((day, count) -> {
-            System.out.println(day.toLocalDate() + ", " + count);
-        });
-
-        System.out.println("\nTotal production users: " + csvReader.getTotalProductionAcounts());
+object App {
+    private const val FILE_NAME = "export-2023-09-20-08-29-27.csv"
+    @JvmStatic
+    fun main(args: Array<String>) {
+        val csvReader = CsvReader(DOWNLOADS_FOLDER_PATH + FILE_NAME)
+        csvReader.readFile()
+        csvReader.dailyData.forEach { (day: LocalDateTime, count: Int) -> println(day.toLocalDate().toString() + ", " + count) }
+        println("\nTotal production users: ${csvReader.totalProductionAcounts}")
     }
 }
