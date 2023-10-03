@@ -11,23 +11,8 @@ import java.util.*
 import java.util.stream.Collectors
 
 
-enum class Headers {
-    ID, NAME, CREATION_DATE, TYPE, STATUS, DESCRIPTION, KIND, PROFILE
-}
 
-enum class Status(val value: String) {
-    ACCOUNT_ACTIVE("Aktywne konto klienta"),
-    ACCOUNT_CANCELED("Anulowane konto klienta"),
-    ACCOUNT_BLOCKED("Zablokowane konto klienta"),
-}
-
-enum class Type(val value: String) {
-    ACCOUNT_INDIVIDUAL("Osobiste konto klienta"),
-    ACCOUNT_ANONYMOUS("Anonimowe konto klienta"),
-    ACCOUNT_CORPORATE("Firmowe konto klienta")
-}
-
-class CsvReader(private val fileName: String) {
+class AccountsCsvReader(private val fileName: String) {
     private var records: List<CSVRecord>? = null
     private var recordsIndividual: List<CSVRecord>? = null
     private var recordsAnonymous: List<CSVRecord>? = null
@@ -110,12 +95,26 @@ class CsvReader(private val fileName: String) {
     override fun toString(): String {
         val dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy")
         val today = LocalDate.now().format(dateFormat)
-        return listOf(today, individualActiveUsers, individualCanceledUsers, individualBlockedUsers, anonymousActiveUsers, anonymousCanceledUsers, anonymousBlockedUsers, corporateActiveUsers, corporateCanceledUsers, corporateBlockedUsers).joinToString()
+        return listOf(today, individualActiveUsers, individualCanceledUsers, individualBlockedUsers, "   ", anonymousActiveUsers, anonymousCanceledUsers, anonymousBlockedUsers, "   ", corporateActiveUsers, corporateCanceledUsers, corporateBlockedUsers).joinToString()
     }
 
-//    companion object {
-//        val HEADERS = arrayOf("Id konta", "Nazwa", "Data utworzenia", "Typ", "Status", "Opis", "Rodzaj",
-//                "Profil użytkownika")
+    companion object {
+        enum class Headers {
+            ID, NAME, CREATION_DATE, TYPE, STATUS, DESCRIPTION, KIND, PROFILE
+        }
+
+        enum class Status(val value: String) {
+            ACCOUNT_ACTIVE("Aktywne konto klienta"),
+            ACCOUNT_CANCELED("Anulowane konto klienta"),
+            ACCOUNT_BLOCKED("Zablokowane konto klienta"),
+        }
+
+        enum class Type(val value: String) {
+            ACCOUNT_INDIVIDUAL("Osobiste konto klienta"),
+            ACCOUNT_ANONYMOUS("Anonimowe konto klienta"),
+            ACCOUNT_CORPORATE("Firmowe konto klienta")
+        }
+
 //        const val FIRST_PRODUCTION_ID = 640
-//    }
+    }
 }
