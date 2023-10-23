@@ -6,10 +6,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ua.pp.spidchenko</groupId>
-    <artifactId>importcsv</artifactId>
+    <artifactId>csv-statistics</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>importcsv</name>
+    <name>csv-statistics</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
