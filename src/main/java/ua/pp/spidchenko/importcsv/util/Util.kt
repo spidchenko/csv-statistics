@@ -5,8 +5,11 @@ import ua.pp.spidchenko.importcsv.csv.CardsCsvReader
 import ua.pp.spidchenko.importcsv.csv.CsvReader
 import java.io.File
 import java.nio.file.FileSystems
+import java.nio.file.Path
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.io.path.getLastModifiedTime
+import kotlin.io.path.listDirectoryEntries
 
 private const val DATETIME_PATTERN = "yyyy/MM/dd HH:mm"
 private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN) // 2023/08/25 12:46
@@ -40,3 +43,9 @@ fun findFreshCardsFile(files: List<File>): File? {
     }
     return null
 }
+
+fun getAllCsvFilesInFolder(folder: Path): List<File> =
+    folder
+        .listDirectoryEntries("export-*.csv")
+        .sortedByDescending { file -> file.getLastModifiedTime() }
+        .map { it.toFile() }
